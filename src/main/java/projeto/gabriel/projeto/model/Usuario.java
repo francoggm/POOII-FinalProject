@@ -103,8 +103,8 @@ public class Usuario {
             if(rs.next()) {
                 usuario.setId(rs.getInt("id"));
                 usuario.setNome(rs.getString("nome"));
-                usuario.setDescricao(rs.getString("email"));
-                usuario.setDescricao(rs.getString("senha"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setSenha(rs.getString("senha"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -127,8 +127,8 @@ public class Usuario {
                 Usuario usuario = new Usuario();
                 usuario.setId(rs.getInt("id"));
                 usuario.setNome(rs.getString("nome"));
-                usuario.setDescricao(rs.getString("email"));
-                usuario.setDescricao(rs.getString("senha"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setSenha(rs.getString("senha"));
                 usuarios.add(usuario);
             }
         } catch (SQLException e) {
