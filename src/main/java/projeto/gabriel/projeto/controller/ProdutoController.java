@@ -27,7 +27,7 @@ public class ProdutoController {
     }
 
     @DeleteMapping("/produto")
-    public void deleteProduto(Produto p){
+    public void deletarProduto(Produto p){
         p.delete();
     }
 
