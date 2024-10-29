@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class Conexao {
-    private String db = "store";
-    private int port = 3306;
-    private String user = "root";
-    private String password = "root";
+    private final String db = "products";
+    private final int port = 3306;
+    private final String user = "user";
+    private final String password = "password";
 
     public Connection getConexao() {
         String uri = String.format("jdbc:mysql://localhost:%d/%s", this.port, this.db);
