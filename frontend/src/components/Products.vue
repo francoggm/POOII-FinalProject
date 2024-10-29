@@ -4,7 +4,7 @@
 
     <ul v-if="products.length">
       <li v-for="product in products" :key="product.id">
-        {{ product.name }} - {{ product.description }} - ${{ product.price }}
+        Nome: {{ product.nome }} - Preço: ${{ product.preco }} - Descrição: {{ product.descricao }} - Peso: {{ product.peso }} 
       </li>
     </ul>
     <p v-else>No products found.</p>
@@ -12,18 +12,22 @@
     <h3>Add New Product</h3>
     <form @submit.prevent="addProduct">
       <label>
-        Name:
-        <input type="text" v-model="newProduct.name" required />
+        Nome:
+        <input type="text" v-model="newProduct.nome" required />
       </label>
       <label>
-        Description:
-        <input type="text" v-model="newProduct.description" required />
+        Descrição:
+        <input type="text" v-model="newProduct.descricao" required />
       </label>
       <label>
-        Price:
-        <input type="number" v-model="newProduct.price" required />
+        Preço:
+        <input type="number" v-model="newProduct.preco" required />
       </label>
-      <button type="submit">Add Product</button>
+      <label>
+        Peso:
+        <input type="number" v-model="newProduct.peso" required />
+      </label>
+      <button type="submit">Adicionar produto</button>
     </form>
   </div>
 </template>
@@ -34,16 +38,17 @@ export default {
     return {
       products: [],
       newProduct: {
-        name: '',
-        description: '',
-        price: 0,
+        nome: '',
+        preco: 0,
+        descricao: '',
+        peso: 0
       },
     };
   },
   methods: {
     async fetchProducts() {
       try {
-        const response = await fetch('https://localhost:8080/produto');
+        const response = await fetch('http://127.0.0.1:8080/produto');
         this.products = await response.json();
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -52,16 +57,21 @@ export default {
     
     async addProduct() {
       try {
-        const response = await fetch('https://localhost:8080/produto', {
+        const formData = new FormData();
+        formData.append('nome', this.newProduct.nome);
+        formData.append('preco', this.newProduct.preco);
+        formData.append('descricao', this.newProduct.descricao);
+        formData.append('peso', this.newProduct.peso);
+
+        const response = await fetch('http://127.0.0.1:8080/produto', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(this.newProduct),
+          body: formData,
         });
 
         if (response.ok) {
           const addedProduct = await response.json();
           this.products.push(addedProduct);
-          this.newProduct = { name: '', description: '', price: 0 };
+          this.newProduct = { nome: '', descricao: '', preco: 0, peso: 0 };
         } else {
           console.error('Error adding product:', response.statusText);
         }
@@ -82,18 +92,22 @@ export default {
   margin: auto;
   font-family: Arial, sans-serif;
 }
+
 ul {
   list-style-type: none;
   padding: 0;
 }
+
 label {
   display: block;
   margin-bottom: 5px;
 }
+
 input {
   display: block;
   margin-bottom: 10px;
 }
+
 button {
   margin-top: 10px;
 }

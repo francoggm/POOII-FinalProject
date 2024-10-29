@@ -60,7 +60,7 @@ public class Produto {
 
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
-                this.id = rs.getInt(id);
+                this.id = rs.getInt(1);
             }
         } catch(SQLException e) {
             e.printStackTrace();

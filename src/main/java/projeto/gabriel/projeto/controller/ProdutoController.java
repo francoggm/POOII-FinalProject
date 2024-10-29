@@ -2,6 +2,7 @@ package projeto.gabriel.projeto.controller;
 
 import java.util.ArrayList;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import projeto.gabriel.projeto.model.Produto;
 
 @RestController
+@CrossOrigin(origins="*")
 public class ProdutoController {
 
     @PostMapping("/produto")
