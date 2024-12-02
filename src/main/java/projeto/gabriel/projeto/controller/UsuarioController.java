@@ -2,39 +2,54 @@ package projeto.gabriel.projeto.controller;
 
 import java.util.ArrayList;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import lombok.AllArgsConstructor;
 import projeto.gabriel.projeto.model.Usuario;
+import projeto.gabriel.projeto.model.UsuarioRepository;
 
+@RestController
+@CrossOrigin(origins = "*")
+@AllArgsConstructor
+@RequestMapping("/usuario")
 public class UsuarioController {
-  @PostMapping("/usuario")
-    public Usuario criarUsuario(Usuario u){
-        u.create();
-        return u;
+
+    private final UsuarioRepository repository;
+
+    @PostMapping
+    public Usuario criarUsuario(Usuario usuario){
+        usuario.setId(null);
+        return repository.save(usuario);
     }
 
-    @PutMapping("/usuario")
-    public Usuario atualizarUsuario(Usuario u) {
-        u.update();
-        return u;
+    @PutMapping
+    public Usuario atualizarUsuario(Usuario usuario) {
+        if(usuario.getId() == null){
+            return null;
+        }
+        
+        return repository.save(usuario);
     }
 
-    @DeleteMapping("/usuario")
-    public void deletarUsuario(Usuario u){
-        u.delete();
+    @DeleteMapping("/{id}")
+    public void deletarUsuario(Usuario usuario){
+        repository.delete(usuario);
     }
 
-    @GetMapping("/usuario")
+    @GetMapping
     public ArrayList<Usuario> listarUsuarios() {
-        return Usuario.getAll();
+        return (ArrayList<Usuario>) repository.findAll();
     }
 
-    @GetMapping("/usuario/{id}")
-    public Usuario buscarUsuario(@PathVariable int id) {
-        return Usuario.get(id);
+    @GetMapping("/{id}")
+    public Usuario buscarUsuario(@PathVariable long id) {
+        return repository.findById(id).get();
     }
 }

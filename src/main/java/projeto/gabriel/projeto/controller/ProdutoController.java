@@ -8,38 +8,50 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.AllArgsConstructor;
 import projeto.gabriel.projeto.model.Produto;
+import projeto.gabriel.projeto.model.ProdutoRepository;
+
+
 
 @RestController
-@CrossOrigin(origins="*")
+@CrossOrigin(origins = "*")
+@AllArgsConstructor
+@RequestMapping("/produto")
 public class ProdutoController {
 
-    @PostMapping("/produto")
-    public Produto criarProduto(Produto p){
-        p.create();
-        return p;
+    private final ProdutoRepository repository;
+    
+    @PostMapping
+    public Produto criarProduto(Produto produto){
+        produto.setId(null);
+        return repository.save(produto);
     }
 
-    @PutMapping("/produto")
-    public Produto atualizarProduto(Produto p) {
-        p.update();
-        return p;
+    @PutMapping
+    public Produto atualizarProduto(Produto produto) {
+        if(produto.getId() == null){
+            return null;
+        }
+        
+        return repository.save(produto);
     }
 
-    @DeleteMapping("/produto")
-    public void deletarProduto(Produto p){
-        p.delete();
+    @DeleteMapping("/{id}")
+    public void deletarProduto(Produto produto){
+        repository.delete(produto);
     }
 
-    @GetMapping("/produto")
+    @GetMapping
     public ArrayList<Produto> listarProdutos() {
-        return Produto.getAll();
+        return (ArrayList<Produto>) repository.findAll();
     }
 
-    @GetMapping("/produto/{id}")
-    public Produto buscarProduto(@PathVariable int id) {
-        return Produto.get(id);
+    @GetMapping("/{id}")
+    public Produto buscarProduto(@PathVariable long id) {
+        return repository.findById(id).get();
     }
 }
