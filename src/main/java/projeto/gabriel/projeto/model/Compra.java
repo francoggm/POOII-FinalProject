@@ -1,14 +1,18 @@
 package projeto.gabriel.projeto.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,12 +27,17 @@ public class Compra {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private LocalDate dataCompra;
+    private Integer parcelas;
+
+    @Column(nullable = false)
+    @Lob
+    private String tipoPagamento;
+
     @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @Temporal(TemporalType.DATE)
-    private Date dataCompra;
-
-    private Integer parcelas;
-    private String tipoPagamento;
+    @OneToMany(mappedBy = "compra")
+    private List<ProdutoCompra> produtoCompraList = new ArrayList<>();
 }

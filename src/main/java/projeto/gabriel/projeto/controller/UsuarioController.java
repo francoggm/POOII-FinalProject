@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 import projeto.gabriel.projeto.model.Usuario;
-import projeto.gabriel.projeto.model.UsuarioRepository;
+import projeto.gabriel.projeto.repository.UsuarioRepository;
 
 @RestController
 @CrossOrigin(origins = "*")

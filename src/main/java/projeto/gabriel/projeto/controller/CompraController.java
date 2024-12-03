@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 import projeto.gabriel.projeto.model.Compra;
-import projeto.gabriel.projeto.model.CompraRepository;
+import projeto.gabriel.projeto.repository.CompraRepository;
 
 @RestController
 @CrossOrigin(origins = "*")

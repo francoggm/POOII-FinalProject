@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 import projeto.gabriel.projeto.model.Produto;
-import projeto.gabriel.projeto.model.ProdutoRepository;
+import projeto.gabriel.projeto.repository.ProdutoRepository;
 
 
 

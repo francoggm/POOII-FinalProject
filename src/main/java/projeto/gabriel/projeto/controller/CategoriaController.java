@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 import projeto.gabriel.projeto.model.Categoria;
-import projeto.gabriel.projeto.model.CategoriaRepository;
+import projeto.gabriel.projeto.repository.CategoriaRepository;
 
 @RestController
 @CrossOrigin(origins = "*")

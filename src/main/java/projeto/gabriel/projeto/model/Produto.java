@@ -1,10 +1,14 @@
 package projeto.gabriel.projeto.model;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,13 +23,13 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
-    private Double preco;
+    private BigDecimal valor;
     private String descricao;
     private Double peso;
 
-    @ManyToOne
-    private Categoria categoria;
+    @OneToMany(mappedBy = "produto")
+    private List<ProdutoCompra> itemCompraList = new ArrayList<>();
 
-    @ManyToOne
-    private Compra compra;
+    @OneToMany(mappedBy = "produto")
+    private List<ProdutoCategoria> produtoCategoriaList = new ArrayList<>();
 }
