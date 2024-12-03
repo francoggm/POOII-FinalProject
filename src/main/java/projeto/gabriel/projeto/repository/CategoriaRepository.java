@@ -4,4 +4,4 @@ import org.springframework.data.repository.CrudRepository;
 
 import projeto.gabriel.projeto.model.Categoria;
 
-public interface CategoriaRepository extends CrudRepository<Categoria, Long> { }
+public interface CategoriaRepository extends CrudRepository<Categoria, Integer> { }

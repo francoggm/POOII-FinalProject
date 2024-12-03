@@ -39,8 +39,8 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public void deletarUsuario(Usuario usuario){
-        repository.delete(usuario);
+    public void deletarUsuario(@PathVariable Integer id){
+        repository.deleteById(id);
     }
 
     @GetMapping
@@ -49,7 +49,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public Usuario buscarUsuario(@PathVariable long id) {
+    public Usuario buscarUsuario(@PathVariable Integer id) {
         return repository.findById(id).get();
     }
 }

@@ -40,7 +40,7 @@ public class CompraController {
     }
 
     @DeleteMapping("/{id}")
-    public void deletarCompra(@PathVariable long id) {
+    public void deletarCompra(@PathVariable Integer id) {
       repository.deleteById(id);
     }
 
@@ -50,7 +50,7 @@ public class CompraController {
     }
 
     @GetMapping("/{id}")
-    public Compra buscarCompra(@PathVariable long id) {
+    public Compra buscarCompra(@PathVariable Integer id) {
       return repository.findById(id).orElse(null);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,13 +25,14 @@ public class CategoriaController {
     private final CategoriaRepository repository;
 
     @PostMapping
-    public Categoria criarCategoria(Categoria categoria){
+    public Categoria criarCategoria(@RequestBody Categoria categoria){
         categoria.setId(null);
-        return repository.save(categoria);
+        repository.save(categoria);
+        return categoria;
     }
 
     @PutMapping
-    public Categoria atualizarCategoria(Categoria categoria) {
+    public Categoria atualizarCategoria(@RequestBody Categoria categoria) {
         if(categoria.getId() == null){
             return null;
         }
@@ -39,16 +41,17 @@ public class CategoriaController {
     }
 
     @DeleteMapping("/{id}")
-    public void deletarCategoria(Categoria categoria){
-        repository.delete(categoria);
+    public void deletarCategoria(@PathVariable Integer id){
+        repository.deleteById(id);
     }
 
+    @GetMapping
     public ArrayList<Categoria> listarCategorias() {
         return (ArrayList<Categoria>) repository.findAll();
     }
 
     @GetMapping("/{id}")
-    public Categoria buscarCategoria(@PathVariable long id) {
+    public Categoria buscarCategoria(@PathVariable Integer id) {
         return repository.findById(id).get();
     }
 }
