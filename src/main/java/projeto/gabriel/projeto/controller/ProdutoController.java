@@ -1,6 +1,8 @@
 package projeto.gabriel.projeto.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,24 +33,27 @@ public class ProdutoController {
     @PostMapping
     public Produto criarProduto(@RequestBody ProdutoDTO produtoDTO){
         final Produto produto = produtoDTO.toProduto();
-        for (Integer categoriaId : produtoDTO.getCategoriasIds()) {
-            final Categoria categoria = categoriaRepository.findById(categoriaId).orElse(null);
-            if (categoria != null) {
-                produto.getCategorias().add(categoria);
-            }
-        }
+        updateCategorias(produto, produtoDTO.getCategoriasIds());
 
         produtoRepository.save(produto);
         return produto;
     }
 
-    @PutMapping
-    public Produto atualizarProduto(@RequestBody Produto produto) {
-        if(produto.getId() == null){
+    @PutMapping("/{id}")
+    public Produto atualizarProduto(@PathVariable Integer id, @RequestBody ProdutoDTO produtoDTO) {
+        final Produto findProduto = produtoRepository.findById(id).get();
+        if(findProduto == null){
             return null;
         }
         
-        return produtoRepository.save(produto);
+        final Produto updateProduto = produtoDTO.toProduto();
+        updateProduto.setId(findProduto.getId());
+        updateProduto.setCategorias(new HashSet<>());
+
+        updateCategorias(updateProduto, produtoDTO.getCategoriasIds());
+
+        produtoRepository.save(updateProduto);
+        return updateProduto;
     }
 
     @DeleteMapping("/{id}")
@@ -64,5 +69,19 @@ public class ProdutoController {
     @GetMapping("/{id}")
     public Produto buscarProduto(@PathVariable Integer id) {
         return produtoRepository.findById(id).get();
+    }
+    
+    @GetMapping("/categoria/{id}")
+    public ArrayList<Produto> buscarProdutoPorCategoria(@PathVariable Integer id) {
+        return (ArrayList<Produto>) produtoRepository.getProdutosByCategory(id.toString());
+    }
+
+    private void updateCategorias(final Produto produto, final List<Integer> categoriasIds) {
+        for (Integer categoriaId : categoriasIds) {
+            final Categoria categoria = categoriaRepository.findById(categoriaId).orElse(null);
+            if (categoria != null) {
+                produto.getCategorias().add(categoria);
+            }
+        }
     }
 }

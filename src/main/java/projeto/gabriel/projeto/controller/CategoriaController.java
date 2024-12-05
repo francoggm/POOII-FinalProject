@@ -26,7 +26,6 @@ public class CategoriaController {
 
     @PostMapping
     public Categoria criarCategoria(@RequestBody Categoria categoria){
-        categoria.setId(null);
         repository.save(categoria);
         return categoria;
     }
