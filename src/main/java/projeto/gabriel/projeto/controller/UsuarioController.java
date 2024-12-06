@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,18 +25,21 @@ public class UsuarioController {
     private final UsuarioRepository repository;
 
     @PostMapping
-    public Usuario criarUsuario(Usuario usuario){
-        usuario.setId(null);
+    public Usuario criarUsuario(@RequestBody Usuario usuario){
         return repository.save(usuario);
     }
 
-    @PutMapping
-    public Usuario atualizarUsuario(Usuario usuario) {
-        if(usuario.getId() == null){
+    @PutMapping("/{id}")
+    public Usuario atualizarUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
+        final Usuario findUsuario = repository.findById(id).get();
+        if(findUsuario == null){
             return null;
         }
-        
-        return repository.save(usuario);
+
+        usuario.setId(findUsuario.getId());
+        repository.save(usuario);
+
+        return usuario;
     }
 
     @DeleteMapping("/{id}")

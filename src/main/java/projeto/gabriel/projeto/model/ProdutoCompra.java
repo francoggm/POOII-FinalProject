@@ -1,5 +1,9 @@
 package projeto.gabriel.projeto.model;
 
+import java.math.BigDecimal;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +24,7 @@ public class ProdutoCompra {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Double valor;
+    private BigDecimal valor;
     private Integer quantidade;
     private Boolean devolucao;
 
@@ -30,5 +34,6 @@ public class ProdutoCompra {
 
     @ManyToOne
     @JoinColumn(name = "compra_id")
+    @JsonIgnore
     private Compra compra;
 }
