@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compras - Loja do Franco</title>
+    <link rel="stylesheet" href="../styles/compras.css">
+</head>
+<body>
+    <header>
+        <a href="./homepage.html">Home</a>
+        <a href="./usuarios.html">Usuários</a>
+        <a href="./categorias.html">Categorias</a>
+        <a href="./produtos.html">Produtos</a>
+        <a href="./compras.html">Compras</a>
+    </header>
+
+    <h1>Compras</h1>
+    <table>
+        <thead>
+          <tr>
+              <th>ID</th>
+              <th>Data</th>
+              <th>Parcelas</th>
+              <th>Tipo de Pagamento</th>
+              <th>Produtos</th>
+              <th>Valor Total</th>
+              <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="purchase-table-body">
+            <!-- Ingerido via JS -->
+        </tbody>
+    </table>
+
+    <form id="purchase-form">
+      <h2>Adicionar Compra</h2>
+      <label for="user-id">Usuário:</label>
+      <select id="user-id" required>
+          <!-- Inserido via JS -->
+      </select>
+  
+      <label for="purchase-installments">Parcelas:</label>
+      <input type="number" id="purchase-installments" placeholder="Parcelas" min="1" required>
+  
+      <label for="purchase-payment-type">Tipo de Pagamento:</label>
+      <select id="purchase-payment-type" required>
+          <option value="CARTAO_CREDITO">Cartão de Crédito</option>
+          <option value="CARTAO_DEBITO">Cartão de Débito</option>
+          <option value="PIX">PIX</option>
+          <option value="BOLETO">Boleto</option>
+      </select>
+  
+      <div id="product-container">
+          <h3>Produtos:</h3>
+          <!-- Produtos e quantidades serão adicionados dinamicamente -->
+      </div>
+      <button type="button" id="add-product">Adicionar Produto</button>
+  
+      <button type="submit">Salvar</button>
+  </form>
+  
+
+    <script type="module" src="../js/compras.js"></script>
+</body>
+</html>
