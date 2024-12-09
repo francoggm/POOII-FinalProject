@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuários - Loja do Franco</title>
+    <link rel="stylesheet" href="../styles/usuarios.css">
+</head>
+<body>
+    <header>
+      <a href="./homepage.html">Home</a>
+      <a href="./usuarios.html">Usuários</a>
+      <a href="./categorias.html">Categorias</a>
+      <a href="./produtos.html">Produtos</a>
+      <a href="./compras.html">Compras</a>
+    </header>
+  
+    <h1>Usuários</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Senha</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="user-table-body">
+            <!-- Ingerido via JS -->
+        </tbody>
+    </table>
+
+    <form id="user-form">
+        <h2>Adicionar/Atualizar Usuário</h2>
+        <input type="hidden" id="user-id" placeholder="ID (somente para atualização)">
+        <input type="text" id="user-name" placeholder="Nome" required>
+        <input type="email" id="user-email" placeholder="Email" required>
+        <input type="password" id="user-password" placeholder="Senha" required>
+        <button type="submit">Salvar</button>
+    </form>
+
+    <script type="module" src="../js/usuarios.js"></script>
+</body>
+</html>

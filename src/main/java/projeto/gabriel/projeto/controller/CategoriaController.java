@@ -30,13 +30,17 @@ public class CategoriaController {
         return categoria;
     }
 
-    @PutMapping
-    public Categoria atualizarCategoria(@RequestBody Categoria categoria) {
-        if(categoria.getId() == null){
+    @PutMapping("/{id}")
+    public Categoria atualizarCategoria(@PathVariable Integer id, @RequestBody Categoria categoria) {
+        final Categoria findCategoria = repository.findById(id).get();
+        if(findCategoria == null){
             return null;
         }
-        
-        return repository.save(categoria);
+
+        categoria.setId(findCategoria.getId());
+        repository.save(categoria);
+
+        return categoria;
     }
 
     @DeleteMapping("/{id}")

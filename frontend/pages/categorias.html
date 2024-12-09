@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorias - Loja do Franco</title>
+    <link rel="stylesheet" href="../styles/categorias.css">
+</head>
+<body>
+    <header>
+      <a href="./homepage.html">Home</a>
+      <a href="./usuarios.html">Usuários</a>
+      <a href="./categorias.html">Categorias</a>
+      <a href="./produtos.html">Produtos</a>
+      <a href="./compras.html">Compras</a>
+    </header>
+  
+    <h1>Categorias</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="category-table-body">
+            <!-- Ingerido via JS -->
+        </tbody>
+    </table>
+
+    <form id="category-form">
+        <h2>Adicionar/Atualizar Categoria</h2>
+        <input type="hidden" id="category-id" placeholder="ID (somente para atualização)">
+        <input type="text" id="category-name" placeholder="Nome" required>
+        <input type="text" id="category-description" placeholder="Descrição" required>
+        <button type="submit">Salvar</button>
+    </form>
+
+    <script type="module" src="../js/categorias.js"></script>
+</body>
+</html>
