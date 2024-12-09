@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 import projeto.gabriel.projeto.model.Categoria;
-import projeto.gabriel.projeto.repository.CategoriaRepository;
+import projeto.gabriel.projeto.services.CategoriaService;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -22,39 +22,30 @@ import projeto.gabriel.projeto.repository.CategoriaRepository;
 @RequestMapping("/categoria")
 public class CategoriaController {
 
-    private final CategoriaRepository repository;
+    private final CategoriaService service;
 
     @PostMapping
     public Categoria criarCategoria(@RequestBody Categoria categoria){
-        repository.save(categoria);
-        return categoria;
+        return service.criarCategoria(categoria);
     }
 
     @PutMapping("/{id}")
     public Categoria atualizarCategoria(@PathVariable Integer id, @RequestBody Categoria categoria) {
-        final Categoria findCategoria = repository.findById(id).get();
-        if(findCategoria == null){
-            return null;
-        }
-
-        categoria.setId(findCategoria.getId());
-        repository.save(categoria);
-
-        return categoria;
+        return service.atualizarCategoria(id, categoria);
     }
 
     @DeleteMapping("/{id}")
     public void deletarCategoria(@PathVariable Integer id){
-        repository.deleteById(id);
+        service.deletarCategoria(id);
     }
 
     @GetMapping
     public ArrayList<Categoria> listarCategorias() {
-        return (ArrayList<Categoria>) repository.findAll();
+        return service.listarCategorias();
     }
 
     @GetMapping("/{id}")
     public Categoria buscarCategoria(@PathVariable Integer id) {
-        return repository.findById(id).get();
+        return service.buscarCategoria(id);
     }
 }

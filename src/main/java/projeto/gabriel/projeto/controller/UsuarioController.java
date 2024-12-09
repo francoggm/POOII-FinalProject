@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 import projeto.gabriel.projeto.model.Usuario;
-import projeto.gabriel.projeto.repository.UsuarioRepository;
+import projeto.gabriel.projeto.services.UsuarioService;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -22,38 +22,30 @@ import projeto.gabriel.projeto.repository.UsuarioRepository;
 @RequestMapping("/usuario")
 public class UsuarioController {
 
-    private final UsuarioRepository repository;
+    private final UsuarioService service;
 
     @PostMapping
     public Usuario criarUsuario(@RequestBody Usuario usuario){
-        return repository.save(usuario);
+        return service.criarUsuario(usuario);
     }
 
     @PutMapping("/{id}")
     public Usuario atualizarUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
-        final Usuario findUsuario = repository.findById(id).get();
-        if(findUsuario == null){
-            return null;
-        }
-
-        usuario.setId(findUsuario.getId());
-        repository.save(usuario);
-
-        return usuario;
+        return service.atualizarUsuario(id, usuario);
     }
 
     @DeleteMapping("/{id}")
     public void deletarUsuario(@PathVariable Integer id){
-        repository.deleteById(id);
+        service.deletarUsuario(id);
     }
 
     @GetMapping
     public ArrayList<Usuario> listarUsuarios() {
-        return (ArrayList<Usuario>) repository.findAll();
+        return service.listarUsuarios();
     }
 
     @GetMapping("/{id}")
     public Usuario buscarUsuario(@PathVariable Integer id) {
-        return repository.findById(id).get();
+        return service.buscarUsuario(id);
     }
 }
