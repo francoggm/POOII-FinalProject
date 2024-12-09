@@ -1,8 +1,6 @@
 package projeto.gabriel.projeto.controller;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,11 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
-import projeto.gabriel.projeto.model.Categoria;
 import projeto.gabriel.projeto.model.Produto;
 import projeto.gabriel.projeto.payloads.ProdutoDTO;
-import projeto.gabriel.projeto.repository.CategoriaRepository;
-import projeto.gabriel.projeto.repository.ProdutoRepository;
+import projeto.gabriel.projeto.services.ProdutoService;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -27,61 +23,35 @@ import projeto.gabriel.projeto.repository.ProdutoRepository;
 @RequestMapping("/produto")
 public class ProdutoController {
 
-    private final ProdutoRepository produtoRepository;
-    private final CategoriaRepository categoriaRepository;
+    private final ProdutoService service;
     
     @PostMapping
     public Produto criarProduto(@RequestBody ProdutoDTO produtoDTO){
-        final Produto produto = produtoDTO.toProduto();
-        updateCategorias(produto, produtoDTO.getCategoriasIds());
-
-        produtoRepository.save(produto);
-        return produto;
+        return service.criarProduto(produtoDTO);
     }
 
     @PutMapping("/{id}")
     public Produto atualizarProduto(@PathVariable Integer id, @RequestBody ProdutoDTO produtoDTO) {
-        final Produto findProduto = produtoRepository.findById(id).get();
-        if(findProduto == null){
-            return null;
-        }
-        
-        final Produto updateProduto = produtoDTO.toProduto();
-        updateProduto.setId(findProduto.getId());
-        updateProduto.setCategorias(new HashSet<>());
-
-        updateCategorias(updateProduto, produtoDTO.getCategoriasIds());
-
-        produtoRepository.save(updateProduto);
-        return updateProduto;
+        return service.atualizarProduto(id, produtoDTO);
     }
 
     @DeleteMapping("/{id}")
     public void deletarProduto(@PathVariable Integer id){
-        produtoRepository.deleteById(id);
+        service.deletarProduto(id);
     }
 
     @GetMapping
     public ArrayList<Produto> listarProdutos() {
-        return (ArrayList<Produto>) produtoRepository.findAll();
+        return service.listarProdutos();
     }
 
     @GetMapping("/{id}")
     public Produto buscarProduto(@PathVariable Integer id) {
-        return produtoRepository.findById(id).get();
+        return service.buscarProduto(id);
     }
     
     @GetMapping("/categoria/{id}")
     public ArrayList<Produto> buscarProdutoPorCategoria(@PathVariable Integer id) {
-        return (ArrayList<Produto>) produtoRepository.getProdutosByCategory(id.toString());
-    }
-
-    private void updateCategorias(final Produto produto, final List<Integer> categoriasIds) {
-        for (Integer categoriaId : categoriasIds) {
-            final Categoria categoria = categoriaRepository.findById(categoriaId).orElse(null);
-            if (categoria != null) {
-                produto.getCategorias().add(categoria);
-            }
-        }
+        return service.buscarProdutoPorCategoria(id);
     }
 }
