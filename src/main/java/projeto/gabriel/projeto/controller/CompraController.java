@@ -75,6 +75,15 @@ public class CompraController {
 
     @DeleteMapping("/{id}")
     public void deletarCompra(@PathVariable Integer id) {
+      final Compra compra = compraRepository.findById(id).get();
+      if (compra == null) {
+        return;
+      }
+
+      for (ProdutoCompra produtoCompra : compra.getProdutoCompraList()) {
+        produtoCompraRepository.delete(produtoCompra);
+      }
+
       compraRepository.deleteById(id);
     }
 
