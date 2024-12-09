@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - Loja do Franco</title>
+    <link rel="stylesheet" href="../styles/produtos.css">
+  </head>
+  <body>
+    <header>
+      <a href="./homepage.html">Home</a>
+      <a href="./usuarios.html">Usuários</a>
+      <a href="./categorias.html">Categorias</a>
+      <a href="./produtos.html">Produtos</a>
+      <a href="./compras.html">Compras</a>
+    </header>
+    
+    <h1>Produtos</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Valor</th>
+                <th>Descrição</th>
+                <th>Peso</th>
+                <th>Categorias</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="product-table-body">
+            <!-- Ingerido via JS -->
+        </tbody>
+    </table>
+
+    <form id="product-form">
+        <h2>Adicionar/Atualizar Produto</h2>
+        <input type="hidden" id="product-id" placeholder="ID (somente para atualização)">
+        <input type="text" id="product-name" placeholder="Nome" required>
+        <input type="number" id="product-value" placeholder="Valor" step="0.01" required>
+        <textarea id="product-description" placeholder="Descrição" required></textarea>
+        <input type="number" id="product-weight" placeholder="Peso (kg)" step="0.01" required>
+        <select id="product-categories" multiple></select>
+        <button type="submit">Salvar</button>
+    </form>
+
+    <script type="module" src="../js/produtos.js"></script>
+  </body>
+</html>
